@@ -138,6 +138,8 @@ hotel.addRoom(room4);
 //spa.printData();
 //spa1.printData();
 //console.log(spa1);
+
+// spausdinam visa viesbusio info
 console.log(`\n`);
 console.log(`******* ALL ROOMS ********`);
 hotel.printData(false);  // spausdina visus kambarius
