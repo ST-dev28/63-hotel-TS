@@ -1,7 +1,9 @@
-function print(text: string, tag: string = "t") {
-    const t = document.createElement(tag);
-    t.textContent = text;
-    document.getElementById("output").appendChild(t);
+//document.getElementById("output").append("Kambariai")
+
+function print(text: string, tag: string = "p") {
+    const p = document.createElement(tag);
+    p.textContent = text;
+    document.getElementById("output").appendChild(p);
 }
 
 class Hotel {
@@ -43,7 +45,7 @@ class Hotel {
     // Arba
     private printRooms(minComfort?: number): void {
         for (let room of this.rooms) {
-            if (room.comfort > minComfort) {
+            if (room.comfort > minComfort || minComfort === undefined) {
                 room.printData();
             }
         }
@@ -57,8 +59,7 @@ class Hotel {
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
         // onlyComfort yra True
-        if (onlyComfort === true ||
-            onlyComfort === undefined) {
+        if (onlyComfort === true) {
             this.printRooms(15);
         } else {
             this.printRooms(0);
@@ -84,7 +85,7 @@ class Room {
     public printData(): void {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`, "h5");
+        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
     }
 }
 
@@ -106,18 +107,21 @@ class Spa extends Room {
 
     public printData(): void {
         super.printData();
-        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
+        console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
         print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
     }
 }
-
+// kurism viesbuti
 const hotel = new Hotel();
+
+// kuriam kambarius
 const room = new Room(14, 1);
 const room1 = new Room(25, 2);
 const room2 = new Room(65, 4);
 const room3: Spa = new Spa(70, 3, 8, 40);
 const room4: Spa = new Spa(80, 4, 10, 47);
 
+// spausdinam kambarius
 room.printData();
 room1.printData();
 room3.printData();
@@ -138,5 +142,3 @@ hotel.printData(false);  // spausdina visus kambarius
 console.log(`\n`);
 console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
 hotel.printData(true);
-
-//document.getElementById("output").append("Kambariai")

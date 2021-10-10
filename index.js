@@ -1,7 +1,7 @@
-function print(text, tag = "t") {
-    const t = document.createElement(tag);
-    t.textContent = text;
-    document.getElementById("output").appendChild(t);
+function print(text, tag = "p") {
+    const p = document.createElement(tag);
+    p.textContent = text;
+    document.getElementById("output").appendChild(p);
 }
 class Hotel {
     constructor(name = "Heaven", address = "Karkle, Placio str. 24", stars = 5) {
@@ -15,7 +15,7 @@ class Hotel {
     }
     printRooms(minComfort) {
         for (let room of this.rooms) {
-            if (room.comfort > minComfort) {
+            if (room.comfort > minComfort || minComfort === undefined) {
                 room.printData();
             }
         }
@@ -25,8 +25,7 @@ class Hotel {
         console.log(hotelInfo);
         print(hotelInfo, "h1");
         console.log(`Here is a list of rooms for your choice:`, this.rooms);
-        if (onlyComfort === true ||
-            onlyComfort === undefined) {
+        if (onlyComfort === true) {
             this.printRooms(15);
         }
         else {
@@ -45,7 +44,7 @@ class Room {
     printData() {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`, "h5");
+        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
     }
 }
 class Spa extends Room {
@@ -59,7 +58,7 @@ class Spa extends Room {
     }
     printData() {
         super.printData();
-        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
+        console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
         print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
     }
 }
