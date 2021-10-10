@@ -1,3 +1,8 @@
+function print(text, tag = "t") {
+    const t = document.createElement(tag);
+    t.textContent = text;
+    document.getElementById("output").appendChild(t);
+}
 class Hotel {
     constructor(name = "Heaven", address = "Karkle, Placio str. 24", stars = 5) {
         this.name = name;
@@ -18,6 +23,7 @@ class Hotel {
     printData(onlyComfort) {
         const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`;
         console.log(hotelInfo);
+        print(hotelInfo, "h1");
         console.log(`Here is a list of rooms for your choice:`, this.rooms);
         if (onlyComfort === true ||
             onlyComfort === undefined) {
@@ -39,6 +45,7 @@ class Room {
     printData() {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
+        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`, "h5");
     }
 }
 class Spa extends Room {
@@ -52,7 +59,8 @@ class Spa extends Room {
     }
     printData() {
         super.printData();
-        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C`);
+        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
+        print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
     }
 }
 const hotel = new Hotel();

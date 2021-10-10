@@ -1,3 +1,9 @@
+function print(text: string, tag: string = "t") {
+    const t = document.createElement(tag);
+    t.textContent = text;
+    document.getElementById("output").appendChild(t);
+}
+
 class Hotel {
     public readonly name: string;
     public readonly address: string;
@@ -46,6 +52,7 @@ class Hotel {
     public printData(onlyComfort?: boolean): void {
         const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`
         console.log(hotelInfo);
+        print(hotelInfo, "h1");
         console.log(`Here is a list of rooms for your choice:`, this.rooms);
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
@@ -77,6 +84,7 @@ class Room {
     public printData(): void {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
+        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`, "h5");
     }
 }
 
@@ -98,7 +106,8 @@ class Spa extends Room {
 
     public printData(): void {
         super.printData();
-        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C`);
+        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
+        print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
     }
 }
 
@@ -129,3 +138,5 @@ hotel.printData(false);  // spausdina visus kambarius
 console.log(`\n`);
 console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
 hotel.printData(true);
+
+//document.getElementById("output").append("Kambariai")
