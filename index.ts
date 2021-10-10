@@ -2,7 +2,7 @@ class Hotel {
     public readonly name: string;
     public readonly address: string;
     public readonly stars: number
-    public rooms: Room[];
+    public readonly rooms: Room[];
 
     public constructor(name: string = "Heaven",
         address: string = "Karkle, Placio str. 24",
@@ -14,75 +14,112 @@ class Hotel {
         this.rooms = [];
     }
 
+    // metodai
+
     public addRoom(room: Room): void {
         this.rooms.push(room);
     }
 
-    private printRooms(minComfort: number = 15): void {
-        console.log(`Here is a list of rooms:`, this.rooms);
+    // Privatus metodas, pagal kuri atrenkami aukstesnio lygio kambariai nei nurodyta minComfort
+    //kintamajame (siuo atveju >15). Spausdinumui naudodamas Room klases printData metodas
+    private printRooms(minComfort: number) {
+        for (let room of this.rooms) {
+            if (minComfort !== undefined) {
+                if (room.comfort > minComfort) {
+                    room.printData();
+                }
+            } else {
+                room.printData();
+            }
+        }
     }
+    /*
+        // Arba
+        private printRooms(minComfort?: number): void {
+            for (let room of this.rooms) {
+                if (room.comfort > minComfort) {
+                    room.printData();
+                }
+            }
+        }*/
 
-    public printData(): void {
+    public printData(onlyComfort?: boolean): void {
         const hotelInfo = `${this.stars} star hotel "${this.name}", loacated in ${this.address}, is waiting for guests!`
         console.log(hotelInfo);
         console.log(`Here is a list of rooms:`, this.rooms);
+        // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
+        //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
+        // onlyComfort yra True
+        if (onlyComfort) {
+            this.printRooms(15);
+        } else {
+            this.printRooms(0);
+        }
     }
-}
-const hotel = new Hotel();
-hotel.printData();
-console.log('-------------------');
-
-enum RoomType {
-    minComfort = 14,
-    double = 25,
-    luxurySpa = 60
 }
 
 class Room {
     public readonly size: number;
     public readonly capacity: number;
-    public readonly comfort: number;
-    //public readonly type: RoomType;
 
-    public constructor(size: number = 14 | 25 | 60,
-        //type: RoomType = RoomType.minComfort,
-        capacity: number = 1 | 2 | 4,
-        comfort: number) {
+    public constructor(size: number,
+        capacity: number) {
 
         this.size = size;
-        //this.type = type;
         this.capacity = capacity;
-        this.comfort = comfort = Math.round(this.size / this.capacity * 10) / 10;
     }
+
+    get comfort(): number {
+        return Math.round(this.size / this.capacity * 10) / 10;
+    }
+
     public printData(): void {
-        console.log(`Room size is ${this.size}m2 => ${this.capacity} person / room, ${this.comfort} m2 / person.`);
+        console.log('-------------------');
+        console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
     }
 }
-const room = new Room(14, 1, 0);
-const room1 = new Room(25, 2, 0);
-const room2 = new Room(60, 4, 0);
-room.printData();
-hotel.addRoom(room);
-hotel.addRoom(room1);
-hotel.addRoom(room2);
-console.log('-------------------');
 
 class Spa extends Room {
     public readonly poolSize: number;
     public readonly poolTemp: number;
-    public readonly comfort: number;
 
     constructor(poolSize: number,
         poolTemp: number) {
-        super(100, 4, 0);
+        super(100, 4);
         this.poolSize = poolSize;
         this.poolTemp = poolTemp;
-        this.comfort = Math.round((this.size - this.poolSize) / this.capacity * 10) / 10;
     }
+    get comfort(): number {
+        return Math.round((this.size - this.poolSize) / this.capacity * 10) / 10;
+    }
+
     public printData(): void {
         super.printData();
-        console.log(`Pool size is ${this.poolSize}m2 and water temperature is upto ${this.poolTemp} ^ C`);
+        console.log(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C`);
     }
 }
+
+const hotel = new Hotel();
+hotel.printData();
+
+const room = new Room(14, 1);
+const room1 = new Room(25, 2);
+const room2 = new Room(60, 4);
+const room3 = new Room(60, 4);
+room.printData();
+room1.printData();
+room3.printData();
+hotel.addRoom(room);
+hotel.addRoom(room1);
+hotel.addRoom(room2);
+hotel.addRoom(room3);
+
 const spa = new Spa(20, 45);
+const spa1 = new Spa(15, 45);
 spa.printData();
+spa1.printData();
+//console.log(spa1);
+
+console.log(`\n`);
+console.log(`******* COMFORT ********`);
+hotel.printData(false);
