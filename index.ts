@@ -125,7 +125,7 @@ hotel.addRoom(room4);
 //console.log(spa1);
 console.log(`\n`);
 console.log(`******* ALL ROOMS ********`);
-hotel.printData(false);
+hotel.printData(false);  // spausdina visus kambarius
 console.log(`\n`);
-console.log(`******* COMFORT ********`);
+console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
 hotel.printData(true);
