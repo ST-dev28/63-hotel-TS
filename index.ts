@@ -30,8 +30,8 @@ class Hotel {
 
     // Privatus metodas, pagal kuri atrenkami aukstesnio lygio kambariai nei nurodyta minComfort
     //kintamajame (siuo atveju >15). Spausdinumui naudodamas Room klases printData metodas
-    // vienas variantas
 
+    // vienas variantas
     /*private printRooms(minComfort: number) {
         for (let room of this.rooms) {
             if (minComfort !== undefined) {
