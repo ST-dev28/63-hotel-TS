@@ -10,21 +10,17 @@ class Hotel {
     }
     printRooms(minComfort) {
         for (let room of this.rooms) {
-            if (minComfort !== undefined) {
-                if (room.comfort > minComfort) {
-                    room.printData();
-                }
-            }
-            else {
+            if (room.comfort > minComfort) {
                 room.printData();
             }
         }
     }
     printData(onlyComfort) {
-        const hotelInfo = `${this.stars} star hotel "${this.name}", loacated in ${this.address}, is waiting for guests!`;
+        const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`;
         console.log(hotelInfo);
-        console.log(`Here is a list of rooms:`, this.rooms);
-        if (onlyComfort) {
+        console.log(`Here is a list of rooms for your choice:`, this.rooms);
+        if (onlyComfort === true ||
+            onlyComfort === undefined) {
             this.printRooms(15);
         }
         else {
@@ -46,8 +42,8 @@ class Room {
     }
 }
 class Spa extends Room {
-    constructor(poolSize, poolTemp) {
-        super(100, 4);
+    constructor(size, capacity, poolSize, poolTemp) {
+        super(size, capacity);
         this.poolSize = poolSize;
         this.poolTemp = poolTemp;
     }
@@ -60,11 +56,11 @@ class Spa extends Room {
     }
 }
 const hotel = new Hotel();
-hotel.printData();
 const room = new Room(14, 1);
 const room1 = new Room(25, 2);
-const room2 = new Room(60, 4);
-const room3 = new Room(60, 4);
+const room2 = new Room(65, 4);
+const room3 = new Spa(70, 3, 8, 40);
+const room4 = new Spa(80, 4, 10, 47);
 room.printData();
 room1.printData();
 room3.printData();
@@ -72,10 +68,10 @@ hotel.addRoom(room);
 hotel.addRoom(room1);
 hotel.addRoom(room2);
 hotel.addRoom(room3);
-const spa = new Spa(20, 45);
-const spa1 = new Spa(15, 45);
-spa.printData();
-spa1.printData();
+hotel.addRoom(room4);
+console.log(`\n`);
+console.log(`******* ALL ROOMS ********`);
+hotel.printData(false);
 console.log(`\n`);
 console.log(`******* COMFORT ********`);
-hotel.printData(false);
+hotel.printData(true);

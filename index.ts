@@ -22,7 +22,7 @@ class Hotel {
 
     // Privatus metodas, pagal kuri atrenkami aukstesnio lygio kambariai nei nurodyta minComfort
     //kintamajame (siuo atveju >15). Spausdinumui naudodamas Room klases printData metodas
-    private printRooms(minComfort: number) {
+    /*private printRooms(minComfort: number) {
         for (let room of this.rooms) {
             if (minComfort !== undefined) {
                 if (room.comfort > minComfort) {
@@ -32,25 +32,26 @@ class Hotel {
                 room.printData();
             }
         }
-    }
-    /*
-        // Arba
-        private printRooms(minComfort?: number): void {
-            for (let room of this.rooms) {
-                if (room.comfort > minComfort) {
-                    room.printData();
-                }
+    }*/
+
+    // Arba
+    private printRooms(minComfort?: number): void {
+        for (let room of this.rooms) {
+            if (room.comfort > minComfort) {
+                room.printData();
             }
-        }*/
+        }
+    }
 
     public printData(onlyComfort?: boolean): void {
-        const hotelInfo = `${this.stars} star hotel "${this.name}", loacated in ${this.address}, is waiting for guests!`
+        const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`
         console.log(hotelInfo);
-        console.log(`Here is a list of rooms:`, this.rooms);
+        console.log(`Here is a list of rooms for your choice:`, this.rooms);
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
         // onlyComfort yra True
-        if (onlyComfort) {
+        if (onlyComfort === true ||
+            onlyComfort === undefined) {
             this.printRooms(15);
         } else {
             this.printRooms(0);
@@ -83,9 +84,11 @@ class Spa extends Room {
     public readonly poolSize: number;
     public readonly poolTemp: number;
 
-    constructor(poolSize: number,
+    constructor(size: number,
+        capacity: number,
+        poolSize: number,
         poolTemp: number) {
-        super(100, 4);
+        super(size, capacity);
         this.poolSize = poolSize;
         this.poolTemp = poolTemp;
     }
@@ -100,12 +103,12 @@ class Spa extends Room {
 }
 
 const hotel = new Hotel();
-hotel.printData();
-
 const room = new Room(14, 1);
 const room1 = new Room(25, 2);
-const room2 = new Room(60, 4);
-const room3 = new Room(60, 4);
+const room2 = new Room(65, 4);
+const room3: Spa = new Spa(70, 3, 8, 40);
+const room4: Spa = new Spa(80, 4, 10, 47);
+
 room.printData();
 room1.printData();
 room3.printData();
@@ -113,13 +116,16 @@ hotel.addRoom(room);
 hotel.addRoom(room1);
 hotel.addRoom(room2);
 hotel.addRoom(room3);
+hotel.addRoom(room4);
 
-const spa = new Spa(20, 45);
-const spa1 = new Spa(15, 45);
-spa.printData();
-spa1.printData();
+//const spa = new Spa(100, 4, 20, 45);
+//const spa1 = new Spa(90, 3, 15, 45);
+//spa.printData();
+//spa1.printData();
 //console.log(spa1);
-
+console.log(`\n`);
+console.log(`******* ALL ROOMS ********`);
+hotel.printData(false);
 console.log(`\n`);
 console.log(`******* COMFORT ********`);
-hotel.printData(false);
+hotel.printData(true);
