@@ -22,7 +22,7 @@ body {
 }
 #container {
   display: inline-block;
-  position: fixed;
+  /*position: fixed;*/
   width: 300px;
   height: 700px;
   top: 20px;
@@ -48,8 +48,8 @@ h2{
   height: 400px;
   position: relative;
   text-align: center;
-   font-style: italic;
-   color: rgb(180, 69, 4);
+  font-style: italic;
+  color: rgb(180, 69, 4);
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -67,23 +67,31 @@ h2{
  }
 
  @keyframes slideBG {
-    0% {
-background-image: url(./img/hotel.jpg);
+  0% {
+  background-image: url(./img/hotel.jpg);
 }
-    25% {
-background-image: url(./img/fireplace.jpg);
+  25% {
+  background-image: url(./img/fireplace.jpg);
 }
   50% {
-background-image: url(./img/spa3.jpg);
+  background-image: url(./img/spa3.jpg);
 }
-75% {
-background-image: url(./img/spa.jpg);
+  75% {
+  background-image: url(./img/spa.jpg);
 }
-100% {
-background-image: url(./img/spa1.jpg);
+  100% {
+  background-image: url(./img/spa1.jpg);
 }
  }
 
 @media (max-width: 420px) {
-
+#container {
+  max-height: 95%;
+  right: 10%;
+  left: 10%;
+  transition: top 0.5s;
+}
+#output {
+  max-height: 55%;
+  }
 }
