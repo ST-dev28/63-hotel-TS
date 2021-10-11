@@ -1,9 +1,28 @@
 //document.getElementById("output").append("Kambariai")
 
+// funkcijos PRINT informacijos isspausdinimui HTML
+function printTitle(tekstas: string, tagas: string = 'p') {
+    const p = document.createElement(tagas);
+    p.textContent = tekstas;
+    document.getElementById('title').appendChild(p);
+}
+
 function print(text: string, tag: string = "p") {
+    //const breakingTag = document.createElement("br");
     const p = document.createElement(tag);
     p.textContent = text;
+    //document.getElementById("output").appendChild(breakingTag);
     document.getElementById("output").appendChild(p);
+}
+// iterpia tuscia eilute (tarpai tarp tekstu)
+function printBreak() {
+    const breakingTag = document.createElement("br");
+    document.getElementById("output").appendChild(breakingTag);
+}
+
+function printBreakHead() {
+    const breakingTag = document.createElement("br");
+    document.getElementById("title").appendChild(breakingTag);
 }
 
 class Hotel {
@@ -13,7 +32,7 @@ class Hotel {
     public readonly rooms: Room[];
 
     public constructor(name: string = "Heaven",
-        address: string = "Karkle, Placio str. 24",
+        address: string = "Marocco, Mountain road 2",
         stars: number = 5) {
 
         this.name = name;
@@ -53,11 +72,30 @@ class Hotel {
         }
     }
 
+    private rating(): string {
+        let star: string = '';
+        for (let s = 1; s <= this.stars; s++) {
+            star += '⭐';
+        }
+        return star;
+    }
+
     public printData(onlyComfort?: boolean): void {
         const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`
+
+        //Informacija spaudinama i konsole
         console.log(hotelInfo);
-        print(hotelInfo, "h1");
         console.log(`Here is a list of rooms for your choice:`, this.rooms);
+
+        // informacija atvaizduojama HTML
+        //printTitle(hotelInfo, "h6");
+        printTitle(this.rating(), 'h6');
+        printTitle('hotel', 'h4');
+        printTitle(this.name, 'h2');
+        printTitle(this.address, 'h6');
+        printBreakHead();
+        printTitle('Is offering standard and luxury Spa class rooms for your stay: ', 'h6')
+
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
         // onlyComfort yra True
@@ -87,7 +125,13 @@ class Room {
     public printData(): void {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
+        // perduoda info i HTML
+        //print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
+        printBreak();
+        print('Room info:', 'h3');
+        print('size ' + this.size + ' m2', 'h4');
+        print('capacity ' + this.capacity + ' pers.', 'h4');
+        print('comfort ' + this.comfort + ' m2/pers.', 'h4');
     }
 }
 
@@ -110,7 +154,11 @@ class Spa extends Room {
     public printData(): void {
         super.printData();
         console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
-        print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
+        // perduoda info i HTML
+        //print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
+        print('Pool info:', 'h3');
+        print('size ' + this.poolSize + ' m2', 'h4');
+        print('water temperature ' + this.poolTemp + ' ^C', 'h4');
     }
 }
 // kurism viesbuti
@@ -124,9 +172,9 @@ const room3: Spa = new Spa(70, 3, 8, 40);
 const room4: Spa = new Spa(80, 4, 10, 47);
 
 // spausdinam kambarius
-room.printData();
-room1.printData();
-room3.printData();
+//room.printData();
+//room1.printData();
+//room3.printData();
 hotel.addRoom(room);
 hotel.addRoom(room1);
 hotel.addRoom(room2);
@@ -143,6 +191,6 @@ hotel.addRoom(room4);
 console.log(`\n`);
 console.log(`******* ALL ROOMS ********`);
 hotel.printData(false);  // spausdina visus kambarius
-console.log(`\n`);
-console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
-hotel.printData(true);
+//console.log(`\n`);
+//console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
+//hotel.printData(true);

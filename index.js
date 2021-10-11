@@ -1,10 +1,23 @@
+function printTitle(tekstas, tagas = 'p') {
+    const p = document.createElement(tagas);
+    p.textContent = tekstas;
+    document.getElementById('title').appendChild(p);
+}
 function print(text, tag = "p") {
     const p = document.createElement(tag);
     p.textContent = text;
     document.getElementById("output").appendChild(p);
 }
+function printBreak() {
+    const breakingTag = document.createElement("br");
+    document.getElementById("output").appendChild(breakingTag);
+}
+function printBreakHead() {
+    const breakingTag = document.createElement("br");
+    document.getElementById("title").appendChild(breakingTag);
+}
 class Hotel {
-    constructor(name = "Heaven", address = "Karkle, Placio str. 24", stars = 5) {
+    constructor(name = "Heaven", address = "Marocco, Mountain road 2", stars = 5) {
         this.name = name;
         this.address = address;
         this.stars = stars;
@@ -20,11 +33,23 @@ class Hotel {
             }
         }
     }
+    rating() {
+        let star = '';
+        for (let s = 1; s <= this.stars; s++) {
+            star += '⭐';
+        }
+        return star;
+    }
     printData(onlyComfort) {
         const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`;
         console.log(hotelInfo);
-        print(hotelInfo, "h1");
         console.log(`Here is a list of rooms for your choice:`, this.rooms);
+        printTitle(this.rating(), 'h6');
+        printTitle('hotel', 'h4');
+        printTitle(this.name, 'h2');
+        printTitle(this.address, 'h6');
+        printBreakHead();
+        printTitle('Is offering standard and luxury Spa class rooms for your stay: ', 'h6');
         if (onlyComfort === true) {
             this.printRooms(15);
         }
@@ -44,7 +69,11 @@ class Room {
     printData() {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
+        printBreak();
+        print('Room info:', 'h3');
+        print('size ' + this.size + ' m2', 'h4');
+        print('capacity ' + this.capacity + ' pers.', 'h4');
+        print('comfort ' + this.comfort + ' m2/pers.', 'h4');
     }
 }
 class Spa extends Room {
@@ -59,7 +88,9 @@ class Spa extends Room {
     printData() {
         super.printData();
         console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
-        print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
+        print('Pool info:', 'h3');
+        print('size ' + this.poolSize + ' m2', 'h4');
+        print('water temperature ' + this.poolTemp + ' ^C', 'h4');
     }
 }
 const hotel = new Hotel();
@@ -68,9 +99,6 @@ const room1 = new Room(25, 2);
 const room2 = new Room(65, 4);
 const room3 = new Spa(70, 3, 8, 40);
 const room4 = new Spa(80, 4, 10, 47);
-room.printData();
-room1.printData();
-room3.printData();
 hotel.addRoom(room);
 hotel.addRoom(room1);
 hotel.addRoom(room2);
@@ -79,6 +107,3 @@ hotel.addRoom(room4);
 console.log(`\n`);
 console.log(`******* ALL ROOMS ********`);
 hotel.printData(false);
-console.log(`\n`);
-console.log(`******* COMFORT ********`);
-hotel.printData(true);
