@@ -87,8 +87,7 @@ h2{
 @media (max-width: 420px) {
 #container {
   max-height: 95%;
-  right: 10%;
-  left: 10%;
+  right: 3%;
   transition: top 0.5s;
 }
 #output {
