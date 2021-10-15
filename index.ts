@@ -64,10 +64,19 @@ class Hotel {
     }*/
 
     // Arba antras variantas
-    private printRooms(minComfort?: number): void {
+    /*private printRooms(minComfort?: number): void {
         for (let room of this.rooms) {
             if (room.comfort > minComfort || minComfort === undefined) {
                 room.printData();
+            }
+        }
+    }*/
+
+    private printRooms(element: HTMLElement, minComfort?: number): void {
+        for (let room of this.rooms) {
+            if (room.comfort > minComfort || minComfort === undefined) {
+                console.log('*** ROOM ***');
+                room.printData(element);
             }
         }
     }
@@ -80,7 +89,7 @@ class Hotel {
         return star;
     }
 
-    public printData(onlyComfort?: boolean): void {
+    /*public printData(onlyComfort?: boolean): void {
         const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`
 
         //Informacija spaudinama i konsole
@@ -95,7 +104,7 @@ class Hotel {
         printTitle(this.address, 'h6');
         printBreakHead();
         printTitle('Is offering standard and luxury Spa class rooms for your stay: ', 'h6')
-*/
+
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
         // onlyComfort yra True
@@ -104,6 +113,16 @@ class Hotel {
         } else {
             this.printRooms(0);
         }
+    }*/
+
+    public printData(element: HTMLElement): void {
+        if (element) {
+            element.innerHTML += `
+                <h1 id="title">${this.rating()} hotel "${this.name}", ${this.address}</h1>
+            <h3 id="list">Please choose a room for your stay: </h3>`
+        }
+
+        this.printRooms(element);
     }
 }
 
@@ -122,7 +141,7 @@ class Room {
         return Math.round(this.size / this.capacity * 10) / 10;
     }
 
-    public printData(): void {
+    /*public printData(): void {
         console.log('-------------------');
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
         // perduoda info i HTML
@@ -131,7 +150,18 @@ class Room {
         print('Room info:', 'h3');
         print('size ' + this.size + ' m2', 'h4');
         print('capacity ' + this.capacity + ' pers.', 'h4');
-        print('comfort ' + this.comfort + ' m2/pers.', 'h4');*/
+        print('comfort ' + this.comfort + ' m2/pers.', 'h4');
+    }*/
+
+    public printData(element: HTMLElement): void {
+        if (element) {
+            element.innerHTML += `
+                <div id="card">
+                    <h4>Room</h4>
+                    <p>Room size: ${this.size} m2</p>
+                    <p>Capacity: ${this.capacity} persons</p>
+                </div>`
+        }
     }
 }
 
@@ -147,23 +177,37 @@ class Spa extends Room {
         this.poolSize = poolSize;
         this.poolTemp = poolTemp;
     }
+
     get comfort(): number {
         return Math.round((this.size - this.poolSize) / this.capacity * 10) / 10;
     }
 
-    public printData(): void {
-        super.printData();
-        console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
-        // perduoda info i HTML
-        //print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
-        /*print('Pool info:', 'h3');
-        print('size ' + this.poolSize + ' m2', 'h4');
-        print('water temperature ' + this.poolTemp + ' ^C', 'h4');*/
+    /*public printData(): void {
+          super.printData();
+          console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
+          // perduoda info i HTML
+          //print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
+          /*print('Pool info:', 'h3');
+          print('size ' + this.poolSize + ' m2', 'h4');
+          print('water temperature ' + this.poolTemp + ' ^C', 'h4');
+      }*/
+
+    public printData(element: HTMLElement): void {
+        if (element) {
+            element.innerHTML += `
+                <div id="card">
+                    <h4>Room</h4>
+                    <p>Room size: ${this.size} m2</p>
+                    <p>Capacity: ${this.capacity} persons</p>
+                    <p>Pool size: ${this.poolSize} m2</p>
+                    <p>Water temperature: ${this.poolTemp} ^C</p>
+                </div>`
+        }
     }
 }
 // kurism viesbuti
 const hotel = new Hotel();
-
+/*
 // kuriam kambarius
 const room = new Room(14, 1);
 const room1 = new Room(25, 2);
@@ -188,9 +232,53 @@ hotel.addRoom(room4);
 //console.log(spa1);
 
 // spausdinam visa viesbusio info
-console.log(`\n`);
+//console.log(`\n`);
 console.log(`******* ALL ROOMS ********`);
 hotel.printData(false);  // spausdina visus kambarius
-//console.log(`\n`);
-//console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
+console.log(`\n`);
+console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfort kambarius
 //hotel.printData(true);
+*/
+const UI = {
+    roomSelect: document.getElementById("room") as HTMLSelectElement,
+    roomOption: document.getElementById("room") as HTMLOptionElement,
+    peopleSelect: document.getElementById("people") as HTMLSelectElement,
+    peopleOption: document.getElementById("people") as HTMLOptionElement,
+    poolSelect: document.getElementById("pool") as HTMLSelectElement,
+    poolOption: document.getElementById("pool") as HTMLOptionElement,
+    tempSelect: document.getElementById("temp") as HTMLSelectElement,
+    tempOption: document.getElementById("temp") as HTMLOptionElement,
+    saveButton: document.getElementById("save") as HTMLButtonElement,
+    cardDiv: document.querySelector<HTMLDivElement>("output") as HTMLDivElement,
+}
+console.log(UI.saveButton);
+
+let rooms: Room[] = [];
+
+UI.saveButton.addEventListener("click", (e) => {
+    const roomSize = Number(UI.roomOption.value);
+    const capacity = Number(UI.peopleOption.value);
+    const poolSize = Number(UI.poolOption.value);
+    const temp = Number(UI.tempOption.value);
+
+    hotel.addRoom(new Room(roomSize, capacity));
+
+    //Validations
+    /*if (!poolSize ||
+        !temp) {
+
+        hotel.addRoom(new Room(roomSize, capacity));
+    } else {
+        hotel.addRoom(new Spa(roomSize, capacity, poolSize, temp));
+    }*/
+    //Show Room Card
+    display();
+});
+
+function display(): void {
+    UI.cardDiv.innerHTML = "";
+
+    for (const room of rooms) {
+        room.printData(UI.cardDiv);
+    }
+}

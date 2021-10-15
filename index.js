@@ -1,21 +1,3 @@
-/*function printTitle(tekstas, tagas = 'p') {
-    const p = document.createElement(tagas);
-    p.textContent = tekstas;
-    document.getElementById('title').appendChild(p);
-}
-function print(text, tag = "p") {
-    const p = document.createElement(tag);
-    p.textContent = text;
-    document.getElementById("output").appendChild(p);
-}
-function printBreak() {
-    const breakingTag = document.createElement("br");
-    document.getElementById("output").appendChild(breakingTag);
-}
-function printBreakHead() {
-    const breakingTag = document.createElement("br");
-    document.getElementById("title").appendChild(breakingTag);
-}*/
 class Hotel {
     constructor(name = "Heaven", address = "Marocco, Mountain road 2", stars = 5) {
         this.name = name;
@@ -26,10 +8,11 @@ class Hotel {
     addRoom(room) {
         this.rooms.push(room);
     }
-    printRooms(minComfort) {
+    printRooms(element, minComfort) {
         for (let room of this.rooms) {
             if (room.comfort > minComfort || minComfort === undefined) {
-                room.printData();
+                console.log('*** ROOM ***');
+                room.printData(element);
             }
         }
     }
@@ -40,22 +23,13 @@ class Hotel {
         }
         return star;
     }
-    printData(onlyComfort) {
-        const hotelInfo = `${this.stars} star hotel "${this.name}", located in ${this.address}, is waiting for guests!`;
-        console.log(hotelInfo);
-        console.log(`Here is a list of rooms for your choice:`, this.rooms);
-        printTitle(this.rating(), 'h6');
-        printTitle('hotel', 'h4');
-        printTitle(this.name, 'h2');
-        printTitle(this.address, 'h6');
-        printBreakHead();
-        printTitle('Is offering standard and luxury Spa class rooms for your stay: ', 'h6');
-        if (onlyComfort === true) {
-            this.printRooms(15);
+    printData(element) {
+        if (element) {
+            element.innerHTML += `
+                <h1 id="title">${this.rating()} hotel "${this.name}", ${this.address}</h1>
+            <h3 id="list">Please choose a room for your stay: </h3>`;
         }
-        else {
-            this.printRooms(0);
-        }
+        this.printRooms(element);
     }
 }
 class Room {
@@ -66,14 +40,15 @@ class Room {
     get comfort() {
         return Math.round(this.size / this.capacity * 10) / 10;
     }
-    printData() {
-        console.log('-------------------');
-        console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        printBreak();
-        print('Room info:', 'h3');
-        print('size ' + this.size + ' m2', 'h4');
-        print('capacity ' + this.capacity + ' pers.', 'h4');
-        print('comfort ' + this.comfort + ' m2/pers.', 'h4');
+    printData(element) {
+        if (element) {
+            element.innerHTML += `
+                <div id="card">
+                    <h4>Room</h4>
+                    <p>Room size: ${this.size} m2</p>
+                    <p>Capacity: ${this.capacity} persons</p>
+                </div>`;
+        }
     }
 }
 class Spa extends Room {
@@ -85,25 +60,45 @@ class Spa extends Room {
     get comfort() {
         return Math.round((this.size - this.poolSize) / this.capacity * 10) / 10;
     }
-    printData() {
-        super.printData();
-        console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
-        print('Pool info:', 'h3');
-        print('size ' + this.poolSize + ' m2', 'h4');
-        print('water temperature ' + this.poolTemp + ' ^C', 'h4');
+    printData(element) {
+        if (element) {
+            element.innerHTML += `
+                <div id="card">
+                    <h4>Room</h4>
+                    <p>Room size: ${this.size} m2</p>
+                    <p>Capacity: ${this.capacity} persons</p>
+                    <p>Pool size: ${this.poolSize} m2</p>
+                    <p>Water temperature: ${this.poolTemp} ^C</p>
+                </div>`;
+        }
     }
 }
 const hotel = new Hotel();
-const room = new Room(14, 1);
-const room1 = new Room(25, 2);
-const room2 = new Room(65, 4);
-const room3 = new Spa(70, 3, 8, 40);
-const room4 = new Spa(80, 4, 10, 47);
-hotel.addRoom(room);
-hotel.addRoom(room1);
-hotel.addRoom(room2);
-hotel.addRoom(room3);
-hotel.addRoom(room4);
-console.log(`\n`);
-console.log(`******* ALL ROOMS ********`);
-hotel.printData(false);
+const UI = {
+    roomSelect: document.getElementById("room"),
+    roomOption: document.getElementById("room"),
+    peopleSelect: document.getElementById("people"),
+    peopleOption: document.getElementById("people"),
+    poolSelect: document.getElementById("pool"),
+    poolOption: document.getElementById("pool"),
+    tempSelect: document.getElementById("temp"),
+    tempOption: document.getElementById("temp"),
+    saveButton: document.getElementById("save"),
+    cardDiv: document.querySelector("output"),
+};
+console.log(UI.saveButton);
+let rooms = [];
+UI.saveButton.addEventListener("click", (e) => {
+    const roomSize = Number(UI.roomOption.value);
+    const capacity = Number(UI.peopleOption.value);
+    const poolSize = Number(UI.poolOption.value);
+    const temp = Number(UI.tempOption.value);
+    hotel.addRoom(new Room(roomSize, capacity));
+    display();
+});
+function display() {
+    UI.cardDiv.innerHTML = "";
+    for (const room of rooms) {
+        room.printData(UI.cardDiv);
+    }
+}
