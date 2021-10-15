@@ -8,9 +8,6 @@ body * {
 }
 
 body {
-}
-
-.background {
   height: 100vh;
   background-image: url('img/hotel.jpg');
   background-position: center center;
@@ -20,21 +17,28 @@ body {
   backface-visibility: hidden;
   animation: slideBG 30s linear infinite 0s;
 }
+
+.background {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+}
 #container {
-  display: inline-block;
+  display: block;
+  /*display: inline-block;
   /*position: fixed;*/
+  /*display: flex;*/
   width: 300px;
-  height: 700px;
+  height: 400x;
   top: 20px;
   right: 100px;
   background-color: #ffffff90;
   border-radius: 20px;
   position: absolute;
   text-align: center;
-  animation: imgAnime 20s;
-}
-h2{
-    text-transform: uppercase;
+  /*animation: imgAnime 20s;*/
+  padding: 20px;
 }
 
 #title{
@@ -43,15 +47,109 @@ h2{
   margin-bottom: 10px;
   color: rgb(238, 114, 12);
 }
+
+#list{
+  position: relative;
+  text-align: center; 
+  margin-bottom: 10px;
+  color: rgb(238, 114, 12);
+}
+
+form{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-left: auto;
+}
+
+select{
+display: block;  
+width: 100%;
+border: 0;
+padding: 5px;
+box-sizing: border-box;  
+margin-bottom: 20px;
+font-family: inherit;  
+font-size: 18px;
+border-bottom: solid 2px rgb(189, 72, 5);
+color: rgb(189, 72, 5);
+background-color: transparent;
+}
+
+button {
+  border: none;
+  width: 140px;
+  height: 40px;
+  border: 2px solid rgb(189, 72, 5);
+  /*margin: auto;*/
+  margin: 20px auto 15px auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  color: rgb(189, 72, 5);
+  text-transform: uppercase;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+button:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+button:hover {
+  border-color: transparent;
+}
+button:hover:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
 #output {
   border-radius: 10px;
   height: 400px;
-  position: relative;
+  /*position: relative;*/
   text-align: center;
   font-style: italic;
   color: rgb(180, 69, 4);
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+#card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #ffffff80;
+  color: rgb(189, 72, 5);
+  margin-top: 5px;
 }
 
 @keyframes imgAnime {
@@ -89,8 +187,9 @@ h2{
   max-height: 95%;
   right: 3%;
   transition: top 0.5s;
+
 }
 #output {
-  max-height: 55%;
+  max-height: 20%;
   }
 }

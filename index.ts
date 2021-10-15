@@ -1,7 +1,7 @@
 //document.getElementById("output").append("Kambariai")
 
 // funkcijos PRINT informacijos isspausdinimui HTML
-function printTitle(tekstas: string, tagas: string = 'p') {
+/*function printTitle(tekstas: string, tagas: string = 'p') {
     const p = document.createElement(tagas);
     p.textContent = tekstas;
     document.getElementById('title').appendChild(p);
@@ -23,7 +23,7 @@ function printBreak() {
 function printBreakHead() {
     const breakingTag = document.createElement("br");
     document.getElementById("title").appendChild(breakingTag);
-}
+}*/
 
 class Hotel {
     public readonly name: string;
@@ -89,13 +89,13 @@ class Hotel {
 
         // informacija atvaizduojama HTML
         //printTitle(hotelInfo, "h6");
-        printTitle(this.rating(), 'h6');
+        /*printTitle(this.rating(), 'h6');
         printTitle('hotel', 'h4');
         printTitle(this.name, 'h2');
         printTitle(this.address, 'h6');
         printBreakHead();
         printTitle('Is offering standard and luxury Spa class rooms for your stay: ', 'h6')
-
+*/
         // if salyga, kuri atspausdina visus kambarius (this.printRooms(0)) arba tik tuos , kurie 
         //yra aukstesnes komforto klases nei nurodyta (this.printRooms(15)). Si salyga veikia, kai
         // onlyComfort yra True
@@ -127,11 +127,11 @@ class Room {
         console.log(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
         // perduoda info i HTML
         //print(`Room info: \nsize -> ${this.size}m2 \ncapacity -> ${this.capacity} person/room \ncomfort level -> ${this.comfort} m2/person.`);
-        printBreak();
+        /*printBreak();
         print('Room info:', 'h3');
         print('size ' + this.size + ' m2', 'h4');
         print('capacity ' + this.capacity + ' pers.', 'h4');
-        print('comfort ' + this.comfort + ' m2/pers.', 'h4');
+        print('comfort ' + this.comfort + ' m2/pers.', 'h4');*/
     }
 }
 
@@ -156,9 +156,9 @@ class Spa extends Room {
         console.log(`>>> Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C.`);
         // perduoda info i HTML
         //print(`Pool info: \nsize -> ${this.poolSize}m2 \nwater temperature -> upto ${this.poolTemp} ^C,`, "h4");
-        print('Pool info:', 'h3');
+        /*print('Pool info:', 'h3');
         print('size ' + this.poolSize + ' m2', 'h4');
-        print('water temperature ' + this.poolTemp + ' ^C', 'h4');
+        print('water temperature ' + this.poolTemp + ' ^C', 'h4');*/
     }
 }
 // kurism viesbuti

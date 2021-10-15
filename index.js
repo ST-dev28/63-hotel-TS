@@ -1,4 +1,4 @@
-function printTitle(tekstas, tagas = 'p') {
+/*function printTitle(tekstas, tagas = 'p') {
     const p = document.createElement(tagas);
     p.textContent = tekstas;
     document.getElementById('title').appendChild(p);
@@ -15,7 +15,7 @@ function printBreak() {
 function printBreakHead() {
     const breakingTag = document.createElement("br");
     document.getElementById("title").appendChild(breakingTag);
-}
+}*/
 class Hotel {
     constructor(name = "Heaven", address = "Marocco, Mountain road 2", stars = 5) {
         this.name = name;
