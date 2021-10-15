@@ -24,11 +24,6 @@ class Hotel {
         return star;
     }
     printData(element) {
-        if (element) {
-            element.innerHTML += `
-                <h1 id="title">${this.rating()} hotel "${this.name}", ${this.address}</h1>
-            <h3 id="list">Please choose a room for your stay: </h3>`;
-        }
         this.printRooms(element);
     }
 }
@@ -43,7 +38,7 @@ class Room {
     printData(element) {
         if (element) {
             element.innerHTML += `
-                <div id="card">
+                <div class="card">
                     <h4>Room</h4>
                     <p>Room size: ${this.size} m2</p>
                     <p>Capacity: ${this.capacity} persons</p>
@@ -87,26 +82,24 @@ const UI = {
     cardDiv: document.querySelector(".output"),
 };
 console.log(UI.saveButton);
-let rooms = [];
-UI.saveButton.addEventListener("click", (e) => {
+UI.saveButton.addEventListener("click", () => {
     const roomSize = Number(UI.roomOption.value);
     const capacity = Number(UI.peopleOption.value);
     const poolSize = Number(UI.poolOption.value);
     const temp = Number(UI.tempOption.value);
-    console.log("--- room ---");
     if (!poolSize &&
         !temp) {
         hotel.addRoom(new Room(roomSize, capacity));
+        console.log("--- room ---");
     }
     else {
         hotel.addRoom(new Spa(roomSize, capacity, poolSize, temp));
+        console.log("--- room ---");
     }
     display();
 });
 function display() {
     UI.cardDiv.innerHTML = "";
     console.log("*** ROOM ***");
-    for (const room of rooms) {
-        room.printData(UI.cardDiv);
-    }
+    hotel.printData(UI.cardDiv);
 }
