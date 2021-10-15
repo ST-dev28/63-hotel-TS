@@ -195,7 +195,7 @@ class Spa extends Room {
     public printData(element: HTMLElement): void {
         if (element) {
             element.innerHTML += `
-                <div id="card">
+                <div class="card">
                     <h4>Room</h4>
                     <p>Room size: ${this.size} m2</p>
                     <p>Capacity: ${this.capacity} persons</p>
@@ -205,7 +205,7 @@ class Spa extends Room {
         }
     }
 }
-// kurism viesbuti
+// kuriam viesbuti
 const hotel = new Hotel();
 /*
 // kuriam kambarius
@@ -241,15 +241,17 @@ console.log(`******* COMFORT ********`);   // spausdina tik daugiau nei minComfo
 */
 const UI = {
     roomSelect: document.getElementById("room") as HTMLSelectElement,
-    roomOption: document.getElementById("room") as HTMLOptionElement,
     peopleSelect: document.getElementById("people") as HTMLSelectElement,
-    peopleOption: document.getElementById("people") as HTMLOptionElement,
     poolSelect: document.getElementById("pool") as HTMLSelectElement,
-    poolOption: document.getElementById("pool") as HTMLOptionElement,
     tempSelect: document.getElementById("temp") as HTMLSelectElement,
+
+    roomOption: document.getElementById("room") as HTMLOptionElement,
+    peopleOption: document.getElementById("people") as HTMLOptionElement,
+    poolOption: document.getElementById("pool") as HTMLOptionElement,
     tempOption: document.getElementById("temp") as HTMLOptionElement,
+
     saveButton: document.getElementById("save") as HTMLButtonElement,
-    cardDiv: document.querySelector<HTMLDivElement>("output") as HTMLDivElement,
+    cardDiv: document.querySelector<HTMLDivElement>(".output") as HTMLDivElement,
 }
 console.log(UI.saveButton);
 
@@ -261,23 +263,25 @@ UI.saveButton.addEventListener("click", (e) => {
     const poolSize = Number(UI.poolOption.value);
     const temp = Number(UI.tempOption.value);
 
-    hotel.addRoom(new Room(roomSize, capacity));
+    //hotel.addRoom(new Room(roomSize, capacity));
+    console.log("--- room ---");
+
 
     //Validations
-    /*if (!poolSize ||
+    if (!poolSize &&
         !temp) {
 
         hotel.addRoom(new Room(roomSize, capacity));
     } else {
         hotel.addRoom(new Spa(roomSize, capacity, poolSize, temp));
-    }*/
-    //Show Room Card
+    }
+    //Show chosen room info
     display();
 });
 
 function display(): void {
     UI.cardDiv.innerHTML = "";
-
+    console.log("*** ROOM ***");
     for (const room of rooms) {
         room.printData(UI.cardDiv);
     }

@@ -63,7 +63,7 @@ class Spa extends Room {
     printData(element) {
         if (element) {
             element.innerHTML += `
-                <div id="card">
+                <div class="card">
                     <h4>Room</h4>
                     <p>Room size: ${this.size} m2</p>
                     <p>Capacity: ${this.capacity} persons</p>
@@ -76,15 +76,15 @@ class Spa extends Room {
 const hotel = new Hotel();
 const UI = {
     roomSelect: document.getElementById("room"),
-    roomOption: document.getElementById("room"),
     peopleSelect: document.getElementById("people"),
-    peopleOption: document.getElementById("people"),
     poolSelect: document.getElementById("pool"),
-    poolOption: document.getElementById("pool"),
     tempSelect: document.getElementById("temp"),
+    roomOption: document.getElementById("room"),
+    peopleOption: document.getElementById("people"),
+    poolOption: document.getElementById("pool"),
     tempOption: document.getElementById("temp"),
     saveButton: document.getElementById("save"),
-    cardDiv: document.querySelector("output"),
+    cardDiv: document.querySelector(".output"),
 };
 console.log(UI.saveButton);
 let rooms = [];
@@ -93,11 +93,19 @@ UI.saveButton.addEventListener("click", (e) => {
     const capacity = Number(UI.peopleOption.value);
     const poolSize = Number(UI.poolOption.value);
     const temp = Number(UI.tempOption.value);
-    hotel.addRoom(new Room(roomSize, capacity));
+    console.log("--- room ---");
+    if (!poolSize &&
+        !temp) {
+        hotel.addRoom(new Room(roomSize, capacity));
+    }
+    else {
+        hotel.addRoom(new Spa(roomSize, capacity, poolSize, temp));
+    }
     display();
 });
 function display() {
     UI.cardDiv.innerHTML = "";
+    console.log("*** ROOM ***");
     for (const room of rooms) {
         room.printData(UI.cardDiv);
     }

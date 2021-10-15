@@ -105,7 +105,7 @@ button:hover {
   background-color: #ffffff90;
 }
 
-#output {
+.output {
   border-radius: 10px;
   max-height: 400px;
   /*position: relative;*/
@@ -116,7 +116,7 @@ button:hover {
   overflow-x: hidden;
 }
 
-#card {
+.card {
   display: flex;
   flex-direction: column;
   text-align: center;
