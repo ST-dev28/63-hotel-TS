@@ -273,7 +273,6 @@ UI.saveButton.addEventListener("click", () => {
     //Show chosen room info
     display();
 });
-
 function display(): void {
     UI.cardDiv.innerHTML = "";
     console.log("*** ROOM ***");
