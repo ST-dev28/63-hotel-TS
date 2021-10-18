@@ -9,7 +9,7 @@ _Hotel_
 
 This project is for educational porpuses only. Pull request are welcome, but not prefered! Thank you for your cooperation!
 
-Site published at https://st-dev28.github.io/63-hotel-typeScript/
+Site published at https://st-dev28.github.io/63-hotel-TS/
 
 Design: [Selfmade]
 
